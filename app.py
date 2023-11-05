@@ -78,4 +78,4 @@ class DeskNeoApp:
         self._configure_routes(self.page)
 
 if __name__ == "__main__":
-    ft.app(target=DeskNeoApp())
+    ft.app(target=DeskNeoApp(),assets_dir="assets")

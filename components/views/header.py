@@ -1,6 +1,4 @@
 import flet as ft
-from ionicons_python.ionicons_icons import *
-
 
 class Header:
     def __init__(self, header_title: str='Default title', visible_button_theme: bool=True, **kwargs):
@@ -64,7 +62,7 @@ class Header:
     
     def _icon_button_minimize(self) -> ft.IconButton:
         return ft.IconButton(
-                content=ft.Image(remove_icon, width=20, height=20, color=ft.colors.BLUE_ACCENT_200),
+                content=ft.Image(src="/icons/bag-remove.svg", width=20, height=20, color=ft.colors.BLUE_ACCENT_200),
                 tooltip="Minimizar",
                 on_click=self._minimized,
             )
