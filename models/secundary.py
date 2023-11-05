@@ -6,3 +6,4 @@ class SecundaryModel(FletModel):
     @data
     def example_title(self):
         return "This is the secundary view!"
+    

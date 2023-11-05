@@ -3,6 +3,5 @@ import flet as ft
 
 
 class HomeModel(FletModel):
-    @data
-    def example_title(self):
-        return "This is the Home View!"
+    def home_title(self, value: str) -> str:
+        return f"Bienvenido a la aplicación - {value}"
