@@ -8,8 +8,6 @@ class Header:
         self._about = kwargs.get('about', None)
         self._close = kwargs.get('close', None)
         self._minimized = kwargs.get('minimized', None)
-        
-        super().__init__()
 
     def header(self) -> ft.Container:
         return ft.Container(
@@ -62,7 +60,7 @@ class Header:
     
     def _icon_button_minimize(self) -> ft.IconButton:
         return ft.IconButton(
-                content=ft.Image(src="/icons/bag-remove.svg", width=20, height=20, color=ft.colors.BLUE_ACCENT_200),
+                content=ft.Image(src="/icons/remove.svg", width=20, height=20, color=ft.colors.BLUE_ACCENT_200),
                 tooltip="Minimizar",
                 on_click=self._minimized,
             )

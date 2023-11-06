@@ -3,7 +3,6 @@ import flet as ft
 class ChangeTheme:
     def __init__(self, page: ft.Page):
         self.page = page
-        super().__init__()
 
     def change_theme(self, e: ft.ControlEvent) -> None:
         if self.page.theme_mode == ft.ThemeMode.DARK:

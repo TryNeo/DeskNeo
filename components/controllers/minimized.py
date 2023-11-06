@@ -4,7 +4,6 @@ import flet as ft
 class Minimized:
     def __init__(self, page: ft.Page):
         self.page = page
-        super().__init__()
 
     def minimized(self, e: ft.ControlEvent) -> None:
         self.page.window_minimized = True

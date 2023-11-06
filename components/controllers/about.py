@@ -4,7 +4,6 @@ import flet as ft
 class About:
     def __init__(self, page: ft.Page):
         self.page = page
-        super().__init__()
 
     def about(self, e: ft.ControlEvent) -> None:
         about = ft.AlertDialog(
