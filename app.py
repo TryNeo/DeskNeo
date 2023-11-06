@@ -27,17 +27,17 @@ class DeskNeoApp:
 
     def _configure_app(self,page: ft.Page) -> None:
         def configure_title():
-            page.window_title = "DeskNeo - Ambiente personalizado"
+            page.title = "DeskNeo - Ambiente personalizado"
             page.window_title_bar_buttons_hidden = True
             page.window_title_bar_hidden = True
 
         def configure_size():
             page.window_center()
-            page.window_width = 780
-            page.window_height = 500
-            page.window_max_width = 950
+            page.window_width = 840
+            page.window_height = 420
+            page.window_max_width = 990
             page.window_max_height = 750
-            page.window_min_width = 780
+            page.window_min_width = 840
             page.window_min_height = 420
         
         def configure_theme():
