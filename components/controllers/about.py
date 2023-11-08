@@ -8,7 +8,7 @@ class About:
     def about(self, e: ft.ControlEvent) -> None:
         about = ft.AlertDialog(
                 title=ft.Text("Acerca de la aplicacion - DeskNeo"),
-                content=ft.Text("Aplicacion desarrollada por Joel Josue Huacon Lopez\nVersion:0.2.0\nLincencia:MIT\nContacto:ts.josu3@gmail.com"),
+                content=ft.Text("Aplicacion desarrollada por Joel Josue Huacon Lopez\nVersion:0.2.1\nLincencia:MIT\nContacto:ts.josu3@gmail.com"),
             )
         self.page.dialog = about
         about.open = True

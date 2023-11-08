@@ -9,7 +9,7 @@ class Header:
         self._close = kwargs.get('close', None)
         self._minimized = kwargs.get('minimized', None)
 
-    def header(self) -> ft.Container:
+    def build(self) -> ft.Container:
         return ft.Container(
                 content=ft.Row(
                     controls=[
