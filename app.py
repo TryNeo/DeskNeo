@@ -1,17 +1,14 @@
 import flet as ft
-from flet_mvc import RouteHandler,FletModel,FletController
+from flet_mvc import FletModel,FletController
 
 # Models
 from models.home import HomeModel
-from models.secundary import SecundaryModel
 
 # Views
 from views.home import HomeView
-from views.secundary import SecundaryView
 
 # Controllers
 from controllers.home import HomeController
-from controllers.secundary import SecundaryController
 
 from typing import Type
 from repath import match
@@ -34,11 +31,11 @@ class DeskNeoApp:
         def configure_size():
             page.window_center()
             page.window_width = 840
-            page.window_height = 420
-            page.window_max_width = 990
+            page.window_height = 424
+            page.window_max_width = 1050
             page.window_max_height = 750
             page.window_min_width = 840
-            page.window_min_height = 420
+            page.window_min_height = 423
         
         def configure_theme():
             theme = ft.Theme()
@@ -51,6 +48,7 @@ class DeskNeoApp:
         configure_title()
         configure_size()
         configure_theme()
+
 
     def _configure_routes(self,page: ft.Page) -> None:
         def page_add(url: str, view: ft.View, model=Type[FletModel], controller=Type[FletController]):
@@ -68,7 +66,6 @@ class DeskNeoApp:
                         page.views.clear()
                     page_add(url=url[0], view=url[2], model=url[3], controller=url[4])
                     break
-
         page.on_route_change = routes
         page.go(page.route)
 
