@@ -3,23 +3,27 @@ from flet_mvc import FletModel,FletController
 
 # Models
 from models.home import HomeModel
+from models.worktools import WorkToolsModel
 
 # Views
 from views.home import HomeView
+from views.worktools import WorkToolsView
 
 # Controllers
 from controllers.home import HomeController
+from controllers.worktools import WorkToolsController
 
 from typing import Type
 from repath import match
 
-def path(url: str, clear: bool, view: ft.View, model=Type[FletModel], controller=Type[FletController]) -> list:
+def path(url: str, clear: bool, view: ft.View, model:Type[FletModel], controller:Type[FletController]) -> list:
     return [url,clear, view, model, controller]
 
 class DeskNeoApp:
     def __init__(self):
         self.app_routes: list[list] = [
             path(url="/", clear=True,view=HomeView, model=HomeModel, controller=HomeController),
+            path(url="/work-tools", clear=True,view=WorkToolsView, model=WorkToolsModel, controller=WorkToolsController),
         ]
 
     def _configure_app(self,page: ft.Page) -> None:
