@@ -16,7 +16,7 @@ class Card:
                 content=ft.Column(
                     [
                         ft.ListTile(
-                            width=420,
+                            width=520,
                             height=200,
                             leading=self._icon_card(),
                             title=self._title_card(),
