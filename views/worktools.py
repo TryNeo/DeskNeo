@@ -1,10 +1,9 @@
 from flet_mvc import FletView
-from components.views.header import Header
-from components.controllers.about import About
-from components.controllers.change_theme import ChangeTheme
-from components.controllers.close import Close
-from components.controllers.minimized import Minimized
-from components.views.floatingbutton import FloatingButton
+from core.views.header import Header
+from core.controllers.about import About
+from core.controllers.close import Close
+from core.controllers.minimized import Minimized
+from core.views.floatingbutton import FloatingButton
 
 import flet as ft
 
@@ -24,8 +23,7 @@ class WorkToolsView(FletView):
         super().__init__(model, view, controller)
 
     def _worktools_header(self) -> object:
-        title    = "Herramientas de trabajo"
-        theme    = ChangeTheme(self.controller.page)
+        title    = self.model.worktools_title()
         info     = About(self.controller.page)
         close    = Close(self.controller.page)
         minimized = Minimized(self.controller.page)
