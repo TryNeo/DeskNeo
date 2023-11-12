@@ -4,7 +4,7 @@ from flet_mvc import FletModel, data
 
 class HomeModel(FletModel):
     def home_title(self, value: str) -> str:
-        return f"Bienvenido a la aplicación - {value}"
+        return f"Bienvenido - {value}"
     
     def home_card_default(self) -> list[dict]:
         return [{

@@ -3,7 +3,7 @@ import json
 import os
 import flet as ft
 from flet_mvc import FletController
-from components.views.card import Card
+from core.views.card import Card
 from typing import Type
 
 class HomeController(FletController):
@@ -16,7 +16,7 @@ class HomeController(FletController):
         return full_name
     
 
-    def grid_cards(self,grid:ft.GridView,controller: Type[FletController]) -> None:
+    def responsive_cards(self,responsive_row:ft.ResponsiveRow,controller: Type[FletController]) -> None:
         cards = self.model.home_cards_content("cards-content")
         for card in cards:
             if hasattr(controller,card.get('card_route')):
@@ -26,7 +26,7 @@ class HomeController(FletController):
                     card_route = self.error_method
             else:
                 card_route = self.error_method
-            grid.controls.append(
+            responsive_row.controls.append(
                 Card(
                     card_title=card.get('card_title'),
                     card_body=card.get('card_body'),
@@ -70,6 +70,13 @@ class HomeController(FletController):
     def route_worktools(self,e: ft.ControlEvent) -> None:
         if os.path.exists(os.environ.get('userprofile')+"\Desktop\Configs"):
             self.page.go('/work-tools')
+            self._update
+        else:
+            self.error_directory
+
+    def route_textopus(self,e: ft.ControlEvent) -> None:
+        if os.path.exists(os.environ.get('userprofile')+"\Desktop\Configs"):
+            self.page.go('/text-opus')
             self._update
         else:
             self.error_directory
