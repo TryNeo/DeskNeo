@@ -13,11 +13,11 @@ class TextOpusController(FletController):
             with open(self.ruta_fichero, 'w',encoding='utf-8') as file:
                 file.write(e.control.value)
         except (FileNotFoundError, PermissionError, IsADirectoryError, UnicodeDecodeError) as e:
-            return 'Bienvenido a TextOpus'
+            return 'Comienza a escribir...'
 
     def read_textopus(self) -> str | None:
         try:
             with open(self.ruta_fichero, 'r',encoding='utf-8') as file:
                 return file.read()
         except (FileNotFoundError, PermissionError, IsADirectoryError, UnicodeDecodeError) as e:
-            return 'Bienvenido a TextOpus'
+            return 'Comienza a escribir...'

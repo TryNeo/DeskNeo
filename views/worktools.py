@@ -14,9 +14,10 @@ class WorkToolsView(FletView):
         self.url = url
         view = ft.View(
             route=url,
+            scroll=ft.ScrollMode.HIDDEN,
             controls=[
                 self._worktools_header(),
-                ft.Divider(),
+                self._worktools_body(),
             ],
             floating_action_button=FloatingButton(page=controller.page,route_url="/").build(),
         )
@@ -33,3 +34,13 @@ class WorkToolsView(FletView):
             about=info.about,
             close=close.close,
             minimized=minimized.minimized).build()
+    
+    def _worktools_body(self) -> ft.Column:
+        worktool_responsive_row = ft.ResponsiveRow(spacing=12)
+        self.controller.worktools_read_cards(worktool_responsive_row)
+        return ft.Column(
+            height=1200,width=1200,
+            controls=[
+                worktool_responsive_row
+            ]
+        )

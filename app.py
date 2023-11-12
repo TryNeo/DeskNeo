@@ -35,16 +35,16 @@ class DeskNeoApp:
             page.window_title_bar_buttons_hidden = True
             page.window_title_bar_hidden = True
 
-        def configure_size():
+        def configure_size() -> None:
             page.window_center()
-            page.window_width = 840
-            page.window_height = 400
+            page.window_width = 550
+            page.window_height = 620
             page.window_max_width = 1200
             page.window_max_height = 800
             page.window_min_width = 550
-            page.window_min_height =380
+            page.window_min_height =340
         
-        def configure_theme():
+        def configure_theme() -> None:
             theme = ft.Theme()
             platforms = ["android", "ios", "macos", "linux", "windows"]
             for platform in platforms:
@@ -88,6 +88,6 @@ class DeskNeoApp:
         self.page = flet_page
         self._configure_app(self.page)
         self._configure_routes(self.page)
-        
+
 if __name__ == "__main__":
     ft.app(target=DeskNeoApp(),assets_dir="assets")
