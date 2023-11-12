@@ -4,14 +4,16 @@ from flet_mvc import FletModel,FletController
 # Models
 from models.home import HomeModel
 from models.worktools import WorkToolsModel
+from models.textopus import TextOpusModel
 
 # Views
 from views.home import HomeView
 from views.worktools import WorkToolsView
-
+from views.textopus import TextOpusView
 # Controllers
 from controllers.home import HomeController
 from controllers.worktools import WorkToolsController
+from controllers.textopus import TextOpusController
 
 from typing import Type
 from repath import match
@@ -24,6 +26,7 @@ class DeskNeoApp:
         self.app_routes: list[list] = [
             path(url="/", clear=True,view=HomeView, model=HomeModel, controller=HomeController),
             path(url="/work-tools", clear=True,view=WorkToolsView, model=WorkToolsModel, controller=WorkToolsController),
+            path(url="/text-opus", clear=True,view=TextOpusView, model=TextOpusModel, controller=TextOpusController),
         ]
 
     def _configure_app(self,page: ft.Page) -> None:
@@ -35,24 +38,32 @@ class DeskNeoApp:
         def configure_size():
             page.window_center()
             page.window_width = 840
-            page.window_height = 424
-            page.window_max_width = 1050
-            page.window_max_height = 750
-            page.window_min_width = 840
-            page.window_min_height = 423
+            page.window_height = 400
+            page.window_max_width = 1200
+            page.window_max_height = 800
+            page.window_min_width = 550
+            page.window_min_height =380
         
         def configure_theme():
             theme = ft.Theme()
             platforms = ["android", "ios", "macos", "linux", "windows"]
             for platform in platforms:
                 setattr(theme.page_transitions, platform, ft.PageTransitionTheme.NONE)
+            theme.scrollbar_theme = ft.ScrollbarTheme(
+                    track_color={
+                        ft.MaterialState.DEFAULT: ft.colors.TRANSPARENT,
+                    },
+                    track_visibility=True,
+                    thickness=7,
+                    radius=15,
+                    main_axis_margin=5,
+                )
             page.theme = theme
             page.theme_mode = ft.ThemeMode.DARK
 
         configure_title()
         configure_size()
         configure_theme()
-
 
     def _configure_routes(self,page: ft.Page) -> None:
         def page_add(url: str, view: ft.View, model=Type[FletModel], controller=Type[FletController]):
@@ -77,6 +88,6 @@ class DeskNeoApp:
         self.page = flet_page
         self._configure_app(self.page)
         self._configure_routes(self.page)
-
+        
 if __name__ == "__main__":
     ft.app(target=DeskNeoApp(),assets_dir="assets")
