@@ -8,12 +8,16 @@ from flet_mvc import FletController
 class WorkToolsController(FletController):
     def responsive_cards(self,card:dict) -> ft.Container:
         return ft.Container(
+            border_radius=10,
+            padding=10,
             col={"sm": 6, "md": 4, "xl": 3},
             content=ft.Column(
                 controls=[
                     ft.Row(
                         controls=[
                             ft.Card(
+                                elevation=3,
+                                color=ft.colors.with_opacity(0.0, ft.colors.TRANSPARENT),
                                 content=ft.Container(
                                     content=ft.Column(
                                         [
@@ -31,6 +35,7 @@ class WorkToolsController(FletController):
                         ],
                         alignment=ft.MainAxisAlignment.CENTER,
                     ),
+                    ft.Divider(),
                     ft.ResponsiveRow(
                         alignment=ft.MainAxisAlignment.SPACE_EVENLY,
                         controls=[ ft.Container(
@@ -47,7 +52,7 @@ class WorkToolsController(FletController):
                                 disabled=enviro.get('tool_enviroment_disabled'),
                             )
                         ) for enviro in card.get('tool_list')]
-                    )
+                    ),
                 ]
             )
         )

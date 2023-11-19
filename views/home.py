@@ -3,7 +3,6 @@ from typing import Type
 
 from core.views.header import Header
 from core.controllers.about import About
-from core.controllers.change_theme import ChangeTheme
 from core.controllers.close import Close
 from core.controllers.minimized import Minimized
 
@@ -15,30 +14,27 @@ class HomeView(FletView):
         self.controller = controller
         self.model = model
         self.url = url
-        view = ft.View(
+        self.view = ft.View(
             route=url,
             scroll=ft.ScrollMode.HIDDEN,
             controls=[
                 self._home_body(),
             ],
             appbar=self._home_header(),
+            bgcolor = ft.colors.with_opacity(0.0, ft.colors.TRANSPARENT),
         )
-        
-        super().__init__(model, view, controller)
+        super().__init__(model, self.view, controller)
 
 
     def _home_header(self) -> object:
         username  = self.controller.get_name_user()
         title     = self.model.home_title(value=username)
-        icon_main = ft.icons.HOME_SHARP
-        theme     = ChangeTheme(self.controller.page)
         info      = About(self.controller.page)
         close     = Close(self.controller.page)
         minimized = Minimized(self.controller.page)
         return Header(
             header_title=title,
-            icon_main=icon_main,
-            change_theme=theme.change_theme,
+            visible_button_menu=False,
             about=info.about,
             close=close.close,
             minimized=minimized.minimized).build()

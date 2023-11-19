@@ -81,9 +81,9 @@ class HomeController(FletController):
         else:
             self.error_directory
 
-    def route_checklist(self,e: ft.ControlEvent) -> None:
+    def route_standars(self,e: ft.ControlEvent) -> None:
         if os.path.exists(os.environ.get('userprofile')+"\Desktop\Configs"):
-            self.page.go('/checklist')
+            self.page.go('/standars')
             self._update
         else:
             self.error_directory

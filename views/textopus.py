@@ -5,6 +5,7 @@ from core.controllers.close import Close
 from core.controllers.minimized import Minimized
 from core.views.floatingbutton import FloatingButton
 
+
 import flet as ft
 
 class TextOpusView(FletView):
@@ -12,16 +13,17 @@ class TextOpusView(FletView):
         self.controller = controller
         self.model = model
         self.url = url
-        view = ft.View(
+        self.view = ft.View(
             route=url,
             scroll=ft.ScrollMode.HIDDEN,
             controls=[
                 self._textopus_header(),
                 self._textopus_body(),
             ],
+            bgcolor = ft.colors.with_opacity(0.0, ft.colors.TRANSPARENT),
             floating_action_button=FloatingButton(page=controller.page,route_url="/").build(),
         )
-        super().__init__(model, view, controller)
+        super().__init__(model, self.view, controller)
 
     def _textopus_header(self) -> object:
         title    = self.model.textopus_title()
@@ -30,7 +32,7 @@ class TextOpusView(FletView):
         minimized = Minimized(self.controller.page)
         return Header(
             header_title=title,
-            visible_button_theme=False,
+            visible_button_menu=False,
             about=info.about,
             close=close.close,
             minimized=minimized.minimized).build()
@@ -45,6 +47,7 @@ class TextOpusView(FletView):
             content_padding=20,
             on_change=self.controller.save_textopus,
             cursor_color=ft.colors.GREEN,
+            enable_suggestions=True,
         )
         textfield.value = self.controller.read_textopus()
         return textfield

@@ -11,18 +11,21 @@ class Card:
 
     def build(self) -> ft.Card:
         return ft.Card(
-            elevation=3,
+            elevation=2,
+            color=ft.colors.with_opacity(0.0, ft.colors.TRANSPARENT),
             disabled=self._card_disabled,
             col={"sm": 12, "md": 6, "xl": 6},
             content=ft.Container(
-                border_radius=ft.border_radius.all(13),
+                border_radius=10,
+                on_click=self._card_route,
+                ink=True,
+                bgcolor=ft.colors.with_opacity(0.0, ft.colors.TRANSPARENT),
                 content=ft.ListTile(
                             width=520,
                             height=110,
                             leading=self._icon_card(),
                             title=self._title_card(),
                             subtitle=self._subtitle_card(),
-                            on_click=self._card_route,
                         )
             )
         )
