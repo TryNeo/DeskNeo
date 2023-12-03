@@ -15,3 +15,10 @@ class StandarsModel(FletModel):
             return items
         else:
             self.standars_navs_default()
+
+    def standars_content(self,path: str) -> str:
+        if  os.path.exists(os.environ.get('userprofile')+"\Desktop\Configs\data"):
+            data = self.controller.read_file_json(os.environ.get('userprofile')+f"\Desktop\Configs\data\{path}.json")
+            return data
+        else:
+            self.standars_navs_default()

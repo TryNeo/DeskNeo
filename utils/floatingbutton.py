@@ -9,7 +9,6 @@ class FloatingButton:
         return ft.FloatingActionButton(
             icon=ft.icons.SUBDIRECTORY_ARROW_LEFT,
             on_click=lambda _: self.page.go(self._route_url),
-            tooltip="Regresar al inicio",
+            bgcolor = ft.colors.SURFACE,
             mini=True,
-            bgcolor=ft.colors.SURFACE,
         )

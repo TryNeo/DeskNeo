@@ -1,24 +1,23 @@
 import os
 import flet as ft
-from flet_mvc import FletModel, data
+from flet_mvc import FletModel
+from utils.readyamlfile import ReadYamlFile
 
-class HomeModel(FletModel):
-    def home_title(self, value: str) -> str:
-        return f"Bienvenido - {value}"
+class HomeModel(FletModel):    
+    def home_title(self) -> str:
+        return f"Bienvenido - {self.controller.get_name_user()}"
     
     def home_card_default(self) -> list[dict]:
-        return [{
-            'card_title': 'Titulo por defecto',
-            'card_body' : 'No existe el archivo en la ruta \Configs\data\cards-content.json',
-            'card_icon' : ft.icons.ATTACH_FILE,
-            'card_icon_color': ft.colors.LIGHT_BLUE_300,
-            'card_route': None,
-            'card_disabled': False,
+        return [{   'title': 'No existe el archivo cards.yml',
+            'description' : f'No existe informacion o el archivo en la ruta {os.environ.get("userprofile")}\Desktop\Configs\yaml\cards.yml',
+            'icon' : ft.icons.ATTACH_FILE,
+            'icon_color': ft.colors.LIGHT_BLUE_300,
+            'route': None,
+            'disabled': False,
         }]
     
-    def home_cards_content(self,path: str) -> dict:
-        if  os.path.exists(os.environ.get('userprofile')+"\Desktop\Configs\data"):
-            card = self.controller.read_file_json(os.environ.get('userprofile')+f"\Desktop\Configs\data\{path}.json")
-            return card
-        else:
+    def home_card_data(self) -> list[dict]:
+        try:
+            return ReadYamlFile("cards","yaml").read()
+        except Exception as e:
             return self.home_card_default()
