@@ -1,44 +1,40 @@
-from flet_mvc import FletView
-from core.views.header import Header
-from core.controllers.about import About
-from core.controllers.close import Close
-from core.controllers.minimized import Minimized
-from core.views.floatingbutton import FloatingButton
-
-
 import flet as ft
+from typing import Type
+from utils.header import Header
+from utils.floatingbutton import FloatingButton
+from flet_mvc import FletView,FletModel,FletController
+
+
 
 class TextOpusView(FletView):
-    def __init__(self, controller, model,url):
-        self.controller = controller
-        self.model = model
-        self.url = url
-        self.view = ft.View(
-            route=url,
+    def __init__(self, controller:Type[FletController], model:Type[FletModel],url:str):
+        self.controller : Type[FletController] = controller
+        self.model : Type[FletModel] = model
+        self.url   : str = url
+        self.view  : ft.View = self.__textopus_view()
+        super().__init__(self.model, self.view, self.controller)
+
+    def __textopus_view(self) -> ft.View:
+        return ft.View(
+            route=self.url,
             scroll=ft.ScrollMode.HIDDEN,
             controls=[
-                self._textopus_header(),
-                self._textopus_body(),
+                ft.Container(
+                    content=self.__textopus_body(),
+                )
             ],
+            appbar =self.__textopus_header(),
             bgcolor = ft.colors.with_opacity(0.0, ft.colors.TRANSPARENT),
-            floating_action_button=FloatingButton(page=controller.page,route_url="/").build(),
+            floating_action_button=FloatingButton(page=self.controller.page,route_url="/").build(),
         )
-        super().__init__(model, self.view, controller)
-
-    def _textopus_header(self) -> object:
-        title    = self.model.textopus_title()
-        info     = About(self.controller.page)
-        close    = Close(self.controller.page)
-        minimized = Minimized(self.controller.page)
-        return Header(
-            header_title=title,
-            visible_button_menu=False,
-            about=info.about,
-            close=close.close,
-            minimized=minimized.minimized).build()
     
-    def _textopus_body(self) -> ft.TextField:
-        textfield = ft.TextField(
+
+    def __textopus_header(self) -> ft.AppBar:
+        return Header(page=self.controller.page,
+            header_title=self.model.textopus_title()).build()
+    
+    def __textopus_body(self) -> ft.TextField:
+        textfield : ft.TextField = ft.TextField(
             multiline=True,
             autocorrect=True,
             autofocus=True,
@@ -49,5 +45,5 @@ class TextOpusView(FletView):
             cursor_color=ft.colors.GREEN,
             enable_suggestions=True,
         )
-        textfield.value = self.controller.read_textopus()
+        textfield.value : str = self.controller.read_textopus()
         return textfield

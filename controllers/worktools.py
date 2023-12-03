@@ -6,11 +6,10 @@ from threading import Thread
 from flet_mvc import FletController
 
 class WorkToolsController(FletController):
-    def responsive_cards(self,card:dict) -> ft.Container:
+    def responsive_cards(self,wk:dict) -> ft.Container:
         return ft.Container(
-            border_radius=10,
-            padding=10,
-            col={"sm": 6, "md": 4, "xl": 3},
+            padding=5,
+            col={"sm": 6, "md": 4, "xl": 4},
             content=ft.Column(
                 controls=[
                     ft.Row(
@@ -19,39 +18,34 @@ class WorkToolsController(FletController):
                                 elevation=3,
                                 color=ft.colors.with_opacity(0.0, ft.colors.TRANSPARENT),
                                 content=ft.Container(
-                                    content=ft.Column(
-                                        [
-                                            ft.ListTile(
-                                                width=230,
-                                                height=50,
-                                                leading=ft.Icon(card.get('tool_icon'), size=25, color=card.get('tool_color')),
-                                                title=ft.Text(card.get('tool_title'), size=14, weight=ft.FontWeight.W_400),
-                                            ),
-                                        ]
+                                    content=ft.ListTile(
+                                        width=250,
+                                        height=50,
+                                        leading=ft.Icon(wk.get('icon'), size=25, color=wk.get('icon_color')),
+                                        title=ft.Text(wk.get('title'), size=14, weight=ft.FontWeight.W_600),
                                     ),
-                                    width=230,
+                                    width=250,
                                 ),
                             ),
                         ],
                         alignment=ft.MainAxisAlignment.CENTER,
                     ),
-                    ft.Divider(),
                     ft.ResponsiveRow(
                         alignment=ft.MainAxisAlignment.SPACE_EVENLY,
                         controls=[ ft.Container(
-                            col={"sm": 10, "md": 7, "xl": 3},
                             content=ft.TextButton(
+                                width=199,
                                 content=ft.Row(
                                     [
-                                        ft.Icon(card.get('tool_icon'), size=18, color=card.get('tool_color')),
-                                        ft.Text(enviro.get('tool_enviroment_title'), size=15,weight=ft.FontWeight.W_400,color=ft.colors.ON_SURFACE)
+                                        ft.Icon(wk.get('icon'), size=28, color=wk.get('icon_color')),
+                                        ft.Text(enviro.get('name'), size=15,weight=ft.FontWeight.W_400,color=ft.colors.ON_SURFACE),
                                     ]
                                 ),
-                                data=enviro.get('tool_enviroment_script'),
+                                data=enviro.get('script'),
                                 on_click=self.threading_proccess_bat,
-                                disabled=enviro.get('tool_enviroment_disabled'),
+                                disabled=enviro.get('disabled'),
                             )
-                        ) for enviro in card.get('tool_list')]
+                        ) for enviro in wk.get('tool_list')]
                     ),
                 ]
             )
@@ -67,8 +61,8 @@ class WorkToolsController(FletController):
 
         
     def threading_proccess_bat(self,e:ft.ControlEvent) -> None:
-        data = e.control.data
-        thread = Thread(target=self.proccess_bat, args=(data,))
+        data  : str= e.control.data
+        thread : Thread = Thread(target=self.proccess_bat, args=(data,))
         thread.start()
 
     def proccess_bat(self, data:str) -> None:
@@ -79,31 +73,17 @@ class WorkToolsController(FletController):
             self.error_bat(data)
 
     def worktools_read_cards(self, responsive_row : ft.ResponsiveRow) -> None:
-        cards = self.model.worktools_card_content("worktools-content")
-        for n,card in enumerate(cards,1):
-            if n == 7:
-                responsive_row.controls.clear()
-                self.error_card_enviroments()
-                break
-            else:
-                responsive_row.controls.append(self.responsive_cards(card))
+        woktools : list[dict] = self.model.worktools_card_data()
+        for wk in woktools:
+            responsive_row.controls.append(self.responsive_cards(wk))
     
-    def error_card_enviroments(self) -> None:
-        error_enviroment = ft.AlertDialog(
-            title=ft.Text("Error de Herramientas de trabajo"),
-            content=ft.Text("No se ha podido acceder cargar correctamente a las Herramientas de trabajo ,por favor verifique e intentelo nuevamente."),
-        )
-        self.page.dialog = error_enviroment
-        error_enviroment.open = True
-        self._update()
-        
     def error_bat(self, data:str) -> None:
-        error_bat = ft.AlertDialog(
+        error_bat : ft.AlertDialog = ft.AlertDialog(
             title=ft.Text("Error de Archivo .bat"),
             content=ft.Text(f'No se encuentra el archivo "{data}" en la carpeta "bats"'),
         )
-        self.page.dialog = error_bat
-        error_bat.open = True
+        self.page.dialog : ft.AlertDialog = error_bat
+        error_bat.open : bool = True
         self._update()
 
     def _update(self) -> None:
