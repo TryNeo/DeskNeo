@@ -10,7 +10,7 @@ class StandarsView(FletView):
         self.view = ft.View(
             route=url,
             bgcolor = ft.colors.with_opacity(0.0, ft.colors.TRANSPARENT),
-            floating_action_button=FloatingButton(page=controller.page,route_url="/").build(),
+            #floating_action_button=FloatingButton(page=controller.page,route_url="/").build(),
         )
         self.pages =[self._standars_page_one(),ft.Text("adsasdasd")]
         self.view.drawer = self._standars_drawer()
@@ -22,19 +22,8 @@ class StandarsView(FletView):
         super().__init__(model, self.view, controller)
 
     def _standars_header(self) -> object:
-        title    = self.model.standars_title()
-        info     = About(self.controller.page)
-        #menu     = Menu(self.view)
-        #close    = Close(self.controller.page)
-        #minimized = Minimized(self.controller.page)
-        #$return Header(
-        #$    header_title=title,
-        #$    visible_button_info=False,
-        #$    menu=menu.menu,
-        #$    about=info.about,
-        #$    close=close.close,
-        #$    minimized=minimized.minimized).build()
-#$
+        pass
+
     def _standars_drawer(self) -> ft.NavigationDrawer:
         navigation = ft.NavigationDrawer(
             data=self.pages,
@@ -79,11 +68,13 @@ class StandarsView(FletView):
 
         for mk in self.model.standars_content("items-markdown-u"):
             if mk.get('id_content'):
-                page_one_markdonws.controls.append(Markdown(mk.get('title_markdown'),mk.get('content_markdown'),self.controller,mk.get('id')).main())
+                pass
+                #page_one_markdonws.controls.append(Markdown(mk.get('title_markdown'),mk.get('content_markdown'),self.controller,mk.get('id')).main())
             if mk.get('comand_gif'):
-                page_one_markdonws.controls.append(
-                    Markdown(mk.get('title_markdown'),mk.get('content_markdown'),self.controller).comand_gif(mk.get('comand_gif_url'))
-                )
+                pass
+                #page_one_markdonws.controls.append(
+                #    Markdown(mk.get('title_markdown'),mk.get('content_markdown'),self.controller).comand_gif(mk.get('comand_gif_url'))
+                #)
         page_one_row.controls = [page_one_markdonws,page_one_row_right_panel]
         return page_one_row
     
