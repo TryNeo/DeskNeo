@@ -1,39 +1,49 @@
+import time
 import flet as ft
-from flet_mvc import FletModel,FletController
 
 # Models
 from models.home import HomeModel
 from models.worktools import WorkToolsModel
 from models.textopus import TextOpusModel
-from models.standars import StandarsModel
+#from models.standars import StandarsModel
 
 # Views
 from views.home import HomeView
 from views.worktools import WorkToolsView
 from views.textopus import TextOpusView
-from views.standars import StandarsView
+#from views.standars import StandarsView
 
 # Controllers
 from controllers.home import HomeController
 from controllers.worktools import WorkToolsController
 from controllers.textopus import TextOpusController
-from controllers.standars import StandarsController
+#from controllers.standars import StandarsController
 
-from typing import Type
+from typing import Type,Final
 from repath import match
+from flet_mvc import FletModel,FletController,FletView
 
 class DeskNeoApp:
-    """
-    The main application class for DeskNeo.
-    """
-    __TITLE = "DeskNeo - Ambiente personalizado"
-    __PLATFORMS = ["android", "ios", "macos", "linux", "windows"]
-    __WIDTH      = 550
-    __HEIGHT     = 620
-    __MAX_WIDTH  = 1200
-    __MAX_HEIGHT = 850
-    __MIN_WIDTH  = 550
-    __MIN_HEIGHT = 340
+    def __init__(self) -> None:
+        """
+        Variables:
+        - __TITLE: The title of the application.
+        - __PLATFORMS: The list of supported platforms.
+        - __WIDTH: The width of the application window.
+        - __HEIGHT: The height of the application window.
+        - __MAX_WIDTH: The maximum width of the application window.
+        - __MAX_HEIGHT: The maximum height of the application window.
+        - __MIN_WIDTH: The minimum width of the application window.
+        - __MIN_HEIGHT: The minimum height of the application window.
+        """
+        self.__TITLE      : Final[str] = "DeskNeo - Ambiente personalizado"
+        self.__PLATFORMS  : Final[list] = ["android", "ios", "macos", "linux", "windows"]
+        self.__WIDTH      : Final[int] = 490
+        self.__HEIGHT     : Final[int] = 640
+        self.__MAX_WIDTH  : Final[int] = 1200
+        self.__MAX_HEIGHT : Final[int] = 850
+        self.__MIN_WIDTH  : Final[int] = 490
+        self.__MIN_HEIGHT : Final[int] = 420
 
     def __configure_app(self, page: ft.Page) -> None:
         """
@@ -49,40 +59,40 @@ class DeskNeoApp:
             """
             Configures the title of the page and hides the window title bar buttons and window title bar.
             """
-            page.title = self.__TITLE
-            page.window_title_bar_buttons_hidden = True
-            page.window_title_bar_hidden = True
+            page.title : str = self.__TITLE
+            page.window_title_bar_buttons_hidden : bool = True
+            page.window_title_bar_hidden : bool = True
 
         def configure_window() -> None:
             """
             Configures the window properties.
             """
             page.window_center()
-            page.window_width      = self.__WIDTH
-            page.window_height     = self.__HEIGHT
-            page.window_max_width  = self.__MAX_WIDTH
-            page.window_max_height = self.__MAX_HEIGHT
-            page.window_min_width  = self.__MIN_WIDTH
-            page.window_min_height = self.__MIN_HEIGHT
+            page.window_width      :str = self.__WIDTH
+            page.window_height     :str = self.__HEIGHT
+            page.window_max_width  :str = self.__MAX_WIDTH
+            page.window_max_height :str = self.__MAX_HEIGHT
+            page.window_min_width  :str = self.__MIN_WIDTH
+            page.window_min_height :str = self.__MIN_HEIGHT
         
         def configure_theme() -> None:
             """
             Configures the theme of the page.
             """
-            theme = ft.Theme(use_material3=True, visual_density=ft.ThemeVisualDensity.COMFORTABLE)
+            theme : object = ft.Theme(use_material3=True, visual_density=ft.ThemeVisualDensity.COMFORTABLE)
             for platform in self.__PLATFORMS:
                 setattr(theme.page_transitions, platform, ft.PageTransitionTheme.NONE)
                 theme.scrollbar_theme = ft.ScrollbarTheme(
                     track_color={
-                        ft.MaterialState.DEFAULT: ft.colors.TRANSPARENT,
+                        ft.MaterialState.FOCUSED: ft.colors.TRANSPARENT,
                     },
-                    track_visibility=True,
+                    track_visibility=False,
                     thickness=2,
                     radius=15,
                     main_axis_margin=5,
                 )
-            page.theme = theme
-            page.theme_mode = ft.ThemeMode.DARK
+            page.theme : object = theme
+            page.theme_mode : str = ft.ThemeMode.DARK
             page.update()
 
         configure_title()
@@ -129,11 +139,11 @@ class DeskNeoApp:
             return [
                 path(url="/", clear=True, view=HomeView, model=HomeModel, controller=HomeController),
                 path(url="/work-tools", clear=True, view=WorkToolsView, model=WorkToolsModel, controller=WorkToolsController),
-                path(url="/standars", clear=True, view=StandarsView, model=StandarsModel, controller=StandarsController),
+                #path(url="/standars", clear=True, view=StandarsView, model=StandarsModel, controller=StandarsController),
                 path(url="/text-opus", clear=True, view=TextOpusView, model=TextOpusModel, controller=TextOpusController),
             ]
 
-        def page_add(url: str, view: ft.View, model=Type[FletModel], controller=Type[FletController]):
+        def page_add(url: str, view: ft.View, model=Type[FletModel], controller=Type[FletController]) -> None:
             """
             Adds a page to the views.
 
@@ -146,13 +156,13 @@ class DeskNeoApp:
             Returns:
                 None
             """
-            model = model()
-            controller = controller(page, model)
-            model.controller = controller
-            view = view(controller, model, url)
-            return page.views.append(view.content)
+            model : Type[FletModel] = model()
+            controller : Type[FletController] = controller(page, model)
+            model.controller : Type[FletController] = controller
+            view : Type[FletView] = view(controller, model, url)
+            page.views.append(view.content)
 
-        def routes(e: ft.ControlEvent):
+        def routes(e: ft.ControlEvent) -> None:
             """
             Handles the route change event.
 
@@ -173,7 +183,7 @@ class DeskNeoApp:
         page.on_route_change = routes
         page.go(page.route)
 
-    def __call__(self, flet_page: ft.Page):
+    def __call__(self, flet_page: ft.Page) -> None:
         """
         Initializes the DeskNeoApp.
 
